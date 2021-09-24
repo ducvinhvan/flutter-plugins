@@ -21,28 +21,30 @@ class NotificationEvent {
   String? packageExtraBigText;
   String? packageName;
   String? title;
-  DateTime? timeStamp;
+  DateTime timeStamp;
 
   NotificationEvent(
       {this.packageName,
       this.title,
       this.packageMessage,
       this.packageExtraBigText,
-      this.timeStamp});
+      required this.timeStamp});
 
   factory NotificationEvent.fromMap(Map<dynamic, dynamic> map) {
     DateTime time = DateTime.now();
     String? name = map['packageName'];
-    String? message = map['mesage'];
+    String? message = map['message'];
     String? extraBigText = map['extraBigText'];
     String? title = map['title'];
 
-    return NotificationEvent(
+    NotificationEvent event = NotificationEvent(
         packageName: name,
         title: title,
         packageMessage: message,
         packageExtraBigText: extraBigText,
         timeStamp: time);
+
+    return event;
   }
 
   @override
@@ -64,9 +66,9 @@ class Notifications {
   static const EventChannel _notificationEventChannel =
       EventChannel('notifications');
 
-  Stream<NotificationEvent> _notificationStream;
+  Stream<NotificationEvent>? _notificationStream;
 
-  Stream<NotificationEvent> get notificationStream {
+  Stream<NotificationEvent>? get notificationStream {
     if (Platform.isAndroid) {
       if (_notificationStream == null) {
         _notificationStream = _notificationEventChannel

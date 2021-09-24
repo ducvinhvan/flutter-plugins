@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import androidx.annotation.RequiresApi;
-
+import android.util.Log;
 /**
- * Notification listening service. Intercepts notifications if permission is given to do so.
+ * Notification listening service. Intercepts notifications if permission is
+ * given to do so.
  */
 @SuppressLint("OverrideAbstract")
 @RequiresApi(api = VERSION_CODES.JELLY_BEAN_MR2)
@@ -35,13 +36,18 @@ public class NotificationListener extends NotificationListenerService {
     intent.putExtra(NOTIFICATION_PACKAGE_NAME, packageName);
 
     if (extras != null) {
+      // if (extras != null) {
+      //   for (String key : extras.keySet()) {
+      //     Log.e("TAG", key + " : " + (extras.get(key) != null ? extras.get(key) : "NULL"));
+      //   }
+      // }
       CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
       CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
       CharSequence bigText = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
-
+      
       intent.putExtra(NOTIFICATION_TITLE, title.toString());
       intent.putExtra(NOTIFICATION_MESSAGE, text.toString());
-      intent.putExtra(NOTIFICATION_EXTRA_BIG_TEXT, bigText.toString());
+      intent.putExtra(NOTIFICATION_EXTRA_BIG_TEXT, bigText != null ? bigText.toString() : "");
     }
     sendBroadcast(intent);
   }

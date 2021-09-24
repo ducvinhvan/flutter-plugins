@@ -7,10 +7,11 @@ import android.os.Build.VERSION_CODES;
 import androidx.annotation.RequiresApi;
 import io.flutter.plugin.common.EventChannel.EventSink;
 import java.util.HashMap;
+import android.util.Log;
 
 /**
  * Receives events from @NotificationListener
- * */
+ */
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -35,6 +36,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     data.put("title", title);
     data.put("message", message);
     data.put("extraBigText", extraBigText);
+
+    // Log.e("TAG", data.toString());
+
     eventSink.success(data);
   }
 }
