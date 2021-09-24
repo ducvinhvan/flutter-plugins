@@ -27,14 +27,14 @@ public class NotificationReceiver extends BroadcastReceiver {
     String packageName = intent.getStringExtra(NotificationListener.NOTIFICATION_PACKAGE_NAME);
     String title = intent.getStringExtra(NotificationListener.NOTIFICATION_TITLE);
     String message = intent.getStringExtra(NotificationListener.NOTIFICATION_MESSAGE);
-    String extraBigText = intent.getStringExtra(NotificationListener.EXTRA_BIG_TEXT);
+    String extraBigText = intent.getStringExtra(NotificationListener.NOTIFICATION_EXTRA_BIG_TEXT);
 
     /// Send data back via the Event Sink
     HashMap<String, Object> data = new HashMap<>();
     data.put("packageName", packageName);
     data.put("title", title);
     data.put("message", message);
-    data.put("extraBigText", message);
+    data.put("extraBigText", extraBigText);
     eventSink.success(data);
   }
 }

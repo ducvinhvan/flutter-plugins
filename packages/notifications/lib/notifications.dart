@@ -17,24 +17,31 @@ class NotificationException implements Exception {
 }
 
 class NotificationEvent {
-  String packageMessage;
-  String packageName;
-  String title;
-  DateTime timeStamp;
+  String? packageMessage;
+  String? packageExtraBigText;
+  String? packageName;
+  String? title;
+  DateTime? timeStamp;
 
   NotificationEvent(
-      {this.packageName, this.title, this.packageMessage, this.timeStamp});
+      {this.packageName,
+      this.title,
+      this.packageMessage,
+      this.packageExtraBigText,
+      this.timeStamp});
 
   factory NotificationEvent.fromMap(Map<dynamic, dynamic> map) {
     DateTime time = DateTime.now();
-    String name = map['packageName'];
-    String message = map['mesage'];
-    String title = map['title'];
+    String? name = map['packageName'];
+    String? message = map['mesage'];
+    String? extraBigText = map['extraBigText'];
+    String? title = map['title'];
 
     return NotificationEvent(
         packageName: name,
         title: title,
         packageMessage: message,
+        packageExtraBigText: extraBigText,
         timeStamp: time);
   }
 
@@ -44,9 +51,8 @@ class NotificationEvent {
         "Package Name: $packageName \n "
         "Title: $title \n"
         "Message: $packageMessage \n"
+        "ExtraBigText: $packageExtraBigText \n"
         "Timestamp: $timeStamp \n";
-
-
   }
 }
 

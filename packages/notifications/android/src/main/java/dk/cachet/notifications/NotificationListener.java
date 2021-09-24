@@ -19,6 +19,7 @@ public class NotificationListener extends NotificationListenerService {
   public static String NOTIFICATION_INTENT = "notification_event";
   public static String NOTIFICATION_PACKAGE_NAME = "notification_package_name";
   public static String NOTIFICATION_MESSAGE = "notification_message";
+  public static String NOTIFICATION_EXTRA_BIG_TEXT = "notification_extra_big_text";
   public static String NOTIFICATION_TITLE = "notification_title";
 
   @RequiresApi(api = VERSION_CODES.KITKAT)
@@ -36,9 +37,11 @@ public class NotificationListener extends NotificationListenerService {
     if (extras != null) {
       CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
       CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
+      CharSequence bigText = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
 
       intent.putExtra(NOTIFICATION_TITLE, title.toString());
       intent.putExtra(NOTIFICATION_MESSAGE, text.toString());
+      intent.putExtra(NOTIFICATION_EXTRA_BIG_TEXT, bigText.toString());
     }
     sendBroadcast(intent);
   }
