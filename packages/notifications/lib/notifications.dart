@@ -21,6 +21,9 @@ class NotificationEvent {
   String? packageExtraBigText;
   String? packageName;
   String? title;
+  String? source;
+  String? appId;
+  String? notifyKey;
   DateTime timeStamp;
 
   NotificationEvent(
@@ -28,7 +31,11 @@ class NotificationEvent {
       this.title,
       this.packageMessage,
       this.packageExtraBigText,
-      required this.timeStamp});
+        this.source,
+        this.appId,
+        this.notifyKey,
+
+        required this.timeStamp});
 
   factory NotificationEvent.fromMap(Map<dynamic, dynamic> map) {
     DateTime time = DateTime.now();
@@ -36,12 +43,18 @@ class NotificationEvent {
     String? message = map['message'];
     String? extraBigText = map['extraBigText'];
     String? title = map['title'];
+    String source = map['source'];
+    String appId = map['appId'];
+    String notifyKey = map['notifyKey'];
 
     NotificationEvent event = NotificationEvent(
         packageName: name,
         title: title,
         packageMessage: message,
         packageExtraBigText: extraBigText,
+        source:source,
+        appId:appId,
+        notifyKey:notifyKey,
         timeStamp: time);
 
     return event;
@@ -53,6 +66,10 @@ class NotificationEvent {
         "Package Name: $packageName \n "
         "Title: $title \n"
         "Message: $packageMessage \n"
+        "ExtraBigText: $packageExtraBigText \n"
+        "Source: $source \n"
+        "AppId: $appId \n"
+        "NotifyKey: $notifyKey \n"
         "ExtraBigText: $packageExtraBigText \n"
         "Timestamp: $timeStamp \n";
   }

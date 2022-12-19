@@ -22,6 +22,10 @@ public class NotificationListener extends NotificationListenerService {
   public static String NOTIFICATION_MESSAGE = "notification_message";
   public static String NOTIFICATION_EXTRA_BIG_TEXT = "notification_extra_big_text";
   public static String NOTIFICATION_TITLE = "notification_title";
+  public static String NOTIFICATION_SOURCE = "notification_source";
+  public static String NOTIFICATION_KEY = "notification_key";
+  public static String NOTIFICATION_APP_ID = "notification_app_id";
+
 
   @RequiresApi(api = VERSION_CODES.KITKAT)
   @Override
@@ -30,17 +34,27 @@ public class NotificationListener extends NotificationListenerService {
     String packageName = notification.getPackageName();
     // Retrieve extra object from notification to extract payload.
     Bundle extras = notification.getNotification().extras;
-
+    String notificationKey = "";
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+      notificationKey = notification.getKey();
+    }
     // Pass data from one activity to another.
     Intent intent = new Intent(NOTIFICATION_INTENT);
     intent.putExtra(NOTIFICATION_PACKAGE_NAME, packageName);
 
     if (extras != null) {
-      // if (extras != null) {
-      //   for (String key : extras.keySet()) {
-      //     Log.e("TAG", key + " : " + (extras.get(key) != null ? extras.get(key) : "NULL"));
-      //   }
-      // }
+      String source = "";
+      for (String key : extras.keySet()) {
+        String info = "";
+        if(extras.get(key) != null){
+          String v = extras.get(key).toString();
+          info = key + "=" + v;
+        }else {
+          info = key + "=";
+        }
+        source = source + info + ";";
+        Log.e("TAG", key + " : " + (extras.get(key) != null ? extras.get(key) : "NULL"));
+      }
       CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
       CharSequence text = extras.getCharSequence(Notification.EXTRA_TEXT);
       CharSequence bigText = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
@@ -48,6 +62,9 @@ public class NotificationListener extends NotificationListenerService {
       intent.putExtra(NOTIFICATION_TITLE, title != null ? title.toString() : "");
       intent.putExtra(NOTIFICATION_MESSAGE, text != null ? text.toString(): "");
       intent.putExtra(NOTIFICATION_EXTRA_BIG_TEXT, bigText != null ? bigText.toString() : "");
+      intent.putExtra(NOTIFICATION_SOURCE, source);
+      intent.putExtra(NOTIFICATION_KEY, notificationKey);
+      intent.putExtra(NOTIFICATION_APP_ID, "tg360");
     }
     sendBroadcast(intent);
   }

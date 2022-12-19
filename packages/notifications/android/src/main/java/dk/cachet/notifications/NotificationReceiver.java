@@ -29,6 +29,10 @@ public class NotificationReceiver extends BroadcastReceiver {
     String title = intent.getStringExtra(NotificationListener.NOTIFICATION_TITLE);
     String message = intent.getStringExtra(NotificationListener.NOTIFICATION_MESSAGE);
     String extraBigText = intent.getStringExtra(NotificationListener.NOTIFICATION_EXTRA_BIG_TEXT);
+    String source = intent.getStringExtra(NotificationListener.NOTIFICATION_SOURCE);
+    String appId = intent.getStringExtra(NotificationListener.NOTIFICATION_APP_ID);
+    String notifyKey = intent.getStringExtra(NotificationListener.NOTIFICATION_KEY);
+
 
     /// Send data back via the Event Sink
     HashMap<String, Object> data = new HashMap<>();
@@ -36,6 +40,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     data.put("title", title);
     data.put("message", message);
     data.put("extraBigText", extraBigText);
+    data.put("source", source);
+    data.put("appId", appId);
+    data.put("notifyKey", notifyKey);
 
     // Log.e("TAG", data.toString());
 
